@@ -35,6 +35,7 @@ pub mod inner {
     #[macro_export]
     macro_rules! start_timer {
         ($msg:expr) => {{
+            // println!("herhehrehrherhre");
             use std::{sync::atomic::Ordering, time::Instant};
             use $crate::{compute_indent, Colorize, NUM_INDENT, PAD_CHAR};
 
@@ -129,7 +130,11 @@ pub mod inner {
         }};
     }
 
-    pub fn compute_indent_whitespace(indent_amount: usize) -> String {
+    pub fn compute_indent_whitespace(mut indent_amount: usize) -> String {
+        if indent_amount> 50 {
+            indent_amount = 50;
+            println!("too much indent_amount: {}", indent_amount);
+        }
         let mut indent = String::new();
         for _ in 0..indent_amount {
             indent.push(' ');
@@ -137,7 +142,11 @@ pub mod inner {
         indent
     }
 
-    pub fn compute_indent(indent_amount: usize) -> String {
+    pub fn compute_indent(mut indent_amount: usize) -> String {
+        if indent_amount> 50 {
+            indent_amount = 50;
+            println!("too much indent_amount: {}", indent_amount);
+        }
         use std::env::var;
         let mut indent = String::new();
         let pad_string = match var("CLICOLOR") {
